@@ -23,6 +23,14 @@ render = web.template.render("Views/Templates", base="MainLayout", globals={'ses
 # Classes/Routes
 class Home:
     def GET(self):
+        data = type('obj', (object,), {"username":"adi","password": "1234"})
+
+        login = LoginModel.LoginModel()
+        is_correct = login.check_user(data)
+
+        if is_correct:
+            session_data['user'] = is_correct
+
         return render.Home()
 
 
