@@ -1,5 +1,6 @@
 import web
 from Models import RegisterModel, LoginModel
+web.config.debug = False
 
 urls = (
     '/', 'Home',
@@ -7,11 +8,16 @@ urls = (
     '/postregistration', 'PostRegistration',
     '/login', 'Login',
     '/checklogin', 'CheckLogin',
-    '/test', 'Test'
+    '/logout', 'Logout'
+
 )
 
-render = web.template.render("Views/Templates", base="MainLayout")
 app = web.application(urls, globals())
+session = web.session.Session(app, web.session.DiskStore("sessions"), initializer={'user': None})
+session_data = session._initializer
+
+render = web.template.render("Views/Templates", base="MainLayout", globals={'session': session_data,
+                                                                            'current_user': session_data["user"]})
 
 
 # Classes/Routes
@@ -44,10 +50,20 @@ class CheckLogin:
         print("this is the data !! : ", data)
         login = LoginModel.LoginModel()
         is_correct = login.check_user(data)
-
+        print("you are in Checkout after check_user")
         if is_correct:
+            print("you are in Checkout in the if statement")
+            session_data['user'] = is_correct
             return is_correct
         return "error"
+
+
+class Logout:
+    def GET(self):
+        session['user'] = None
+        session_data['user'] = None
+        session.kill()
+        return 'success'
 
 
 class Test:

@@ -4,6 +4,7 @@
     text-decoration: none;
     list-style: none;
     box-sizing: border-box;
+
 }
 
 body{
@@ -44,6 +45,12 @@ nav ul li a{
 a.active,a:hover{
     background: #1b9bff;
     transition: .5s;
+}
+
+.logout{
+    background: #1b9bff;
+    transition: .5s;
+    border: none;
 }
 
 .check-btn{

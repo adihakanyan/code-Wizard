@@ -15,6 +15,7 @@ class LoginModel:
         user = self.Users.find_one({"username": data.username})
 
         if user:
+            print("You are in check_user --if user:-- LoginModel")
             if bcrypt.checkpw(data.password.encode(), user["password"]):
                 return user
             else:

@@ -10,15 +10,22 @@ $(function () {
       url: "/checklogin",
       data: dataString,
       success: function (response) {
-       if (response == "error"){
-            alert("Could not log in.");
-        }
-        else{
-        console.log("Login as", response);
-        }
+          console.log("you are in login.js in success");
+           if (response == "error"){
+                alert("Could not log in.");
+            }
+            else{
+                console.log("you are in login.js in the else statement")
+                console.log("Login as", response);
+                window.location.href = "/";
+            }
+      },
+      error: function(){
+        console.log("the is a problem in login.js");
       }
     });
     e.preventDefault();
+    return false;
   });
 });
 
